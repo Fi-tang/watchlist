@@ -1,0 +1,31 @@
+<!--
+在一般的 Web程序中，访问一个地址通常会返回一个包含各类信息的 HTML 页面。
+因为我们的程序是动态的，页面中的某些信息需要根据不同的情况来进行调整，
+比如对登录和未登录用户显示不同的信息，所以页面需要在用户访问时根据程序逻辑动态生成。
+
+我们把包含变量和运算逻辑的 HTML 或其他格式的文本叫做模板，执行这些变量替换和逻辑计算工作
+的过程被称为渲染，这个工作由我们这一章要学习使用的模板渲染引擎 -- Jinja2 来完成。
+
+按照默认的设计，Flask 会从程序实例所在模板同级目录的 templates 文件夹中寻找模板，
+我们的程序目前存储在项目根目录的 app.py 文件里，所以我们要在根目录创建这个文件夹
+  -->
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="utf-8">
+    <title>{{name}}'s Watchlist</title>
+</head>
+<body>
+    <h2>{{name}}'s Watchlist</h2>
+    {# 使用 length 过滤器获取 movies 变量的长度 #}
+    <p>{{movies|length}} Titles</p>
+    <ul>
+        {% for movie in movies %} {# 迭代 movies 变量 #}
+        <li>{{movie.title}} - {{movie.year}}</li> {# 等同于 movie['title'] #}
+        {% endfor %} {# 使用 endfor 标签结束 for 语句#}
+    </ul>
+    <footer>
+        <small>&copy; 2018 <a href = "http://helloflask.com/book/3">HelloFlask</a></small>
+    </footer>
+</body>
+</html>
