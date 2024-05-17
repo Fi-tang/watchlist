@@ -14,18 +14,45 @@
 <head>
     <meta charset="utf-8">
     <title>{{name}}'s Watchlist</title>
+    <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" type="text/css">
 </head>
 <body>
-    <h2>{{name}}'s Watchlist</h2>
     {# 使用 length 过滤器获取 movies 变量的长度 #}
+<!--
+最后要为对应的元素设置 class 属性值，以便和对应的 CSS 定义关联起来;
+-->
+   <h2>
+       <img alt="Avatar" class="avatar" src="{{ url_for('static', filename='images/avatar.png')}}">
+       {{name}}'s Watchlist
+   </h2>
     <p>{{movies|length}} Titles</p>
-    <ul>
+    <ul class="movie-list">
         {% for movie in movies %} {# 迭代 movies 变量 #}
         <li>{{movie.title}} - {{movie.year}}</li> {# 等同于 movie['title'] #}
         {% endfor %} {# 使用 endfor 标签结束 for 语句#}
     </ul>
+      <img alt="Walking Totoro" class="totoro" src="{{url_for('static', filename='images/totoro.gif')}}">
     <footer>
         <small>&copy; 2018 <a href = "http://helloflask.com/book/3">HelloFlask</a></small>
     </footer>
 </body>
 </html>
+<!--
+静态文件 (static files) 和我们的模板概念相反，指的是内容不需要动态生成的文件。
+比如图片、CSS文件和 JavaScript 脚本等。
+在 Flask 中，我们需要创建一个 static 文件夹来保存静态文件，它应该和程序模块， templates 文件夹在同一目录层级，我们在项目根目录创建它
+
+生成静态文件 URL
+在 HTML 文件里，引入这些静态文件需要给出资源所在的 URL。为了更加灵活，这些文件的 URL可以通过 Flask 提供的 url_for() 函数来生成。
+学习过 url_for() 函数的用法，传入端点值(视图函数的名称）和参数，返回对应的 URL。
+对于静态文件，需要传入的端点值是 static, 同时使用 filename 参数来传入相对于 static 文件夹的文件路径。
+
+在 static 文件夹的根目录下面放了一个 foo.jpg 文件，下面的调用可以获取它的 URL:
+<img src = "{{url_for('static', filename='foo.jpg')}}">
+-->
+<!--
+添加 Favicon(favourite icon) 是显示在标签页和书签栏的网站头像。
+需要准备一个 ICO, PNG 或 GIF 格式的图片，大小一般为 16 * 16, 32 * 32, 48 * 48， 64 * 64 像素。
+把这个图片放到 static 目录下，然后在 html 模板里引入它
+-->
